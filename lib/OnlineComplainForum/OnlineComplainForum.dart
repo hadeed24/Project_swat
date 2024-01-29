@@ -261,6 +261,9 @@ fathername = fatherNameController.text;
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SizedBox(
+                height: 40,
+              ),
               SizedBox(
                 height: 100,
                 child: Image.asset(
@@ -287,7 +290,7 @@ fathername = fatherNameController.text;
                 hint_text: 'Enter your name & your father/husband',
                 SecondWidget: false,
                 controller: nameController,
-                maxlength: 30,
+                maxlength: 50,
                 maxlines: 1,
                 isCnic: false,
                 needFormatter: false,
