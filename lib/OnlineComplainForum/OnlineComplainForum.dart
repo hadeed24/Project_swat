@@ -55,7 +55,10 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
   List<String> Taluka = [];
   String hintTaluka = "Select Taluka";
   String hintdistricts = "Select Districts";
+  String hintcomplaint = "Select Complain";
   String? _selectedTaluka;
+  String? selectedcomplaintype;
+  List<String> complaintype = ["a", "b", "c"];
 
   Future opendialogbox() => showDialog(
         context: context,
@@ -80,12 +83,13 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                       onPressed: () {
                         setState(() {
                           nameController.clear();
-// fatherNameController.clear();
+                          fatherNameController.clear();
                           cnicController.clear();
                           contactNoController.clear();
                           complaintController.clear();
                           selectedDistrict = null;
                           _selectedTaluka = null;
+                          selectedcomplaintype = null;
                           Taluka.clear();
                           Navigator.of(context).pop();
                         });
@@ -170,9 +174,10 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
 
   bool isSubmitButtonEnabled() {
 // Check if all text fields are filled
-    if (_selectedTaluka?.isNotEmpty == true) {
+    if (_selectedTaluka?.isNotEmpty == true &&
+        selectedcomplaintype?.isNotEmpty == true) {
       return nameController.text.isNotEmpty &&
-//fatherNameController.text.isNotEmpty &&
+          fatherNameController.text.isNotEmpty &&
           cnicController.text.length == 15 &&
           contactNoController.text.length == 12 &&
           complaintController.text.isNotEmpty;
@@ -201,11 +206,11 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
         name = nameController.text;
       });
     });
-/*  fatherNameController.addListener(() {
-setState(() {
-fathername = fatherNameController.text;
-});
-}); */
+    fatherNameController.addListener(() {
+      setState(() {
+        fathername = fatherNameController.text;
+      });
+    });
     cnicController.addListener(() {
       setState(() {
         cnic = cnicController.text;
@@ -238,14 +243,14 @@ fathername = fatherNameController.text;
   @override
   void dispose() {
     nameController.dispose();
-//fatherNameController.dispose();
+    fatherNameController.dispose();
     cnicController.dispose();
     contactNoController.dispose();
     super.dispose();
   }
 
   final TextEditingController nameController = TextEditingController();
-// final TextEditingController fatherNameController = TextEditingController();
+  final TextEditingController fatherNameController = TextEditingController();
   final TextEditingController cnicController = TextEditingController();
   final TextEditingController contactNoController = TextEditingController();
   final TextEditingController complaintController = TextEditingController();
@@ -286,8 +291,8 @@ fathername = fatherNameController.text;
                 height: 18,
               ),
               T_T(
-                heading: 'Name & Father/Husband Name',
-                hint_text: 'Enter your name & your father/husband',
+                heading: 'Name',
+                hint_text: 'Enter your name',
                 SecondWidget: false,
                 controller: nameController,
                 maxlength: 50,
@@ -299,20 +304,20 @@ fathername = fatherNameController.text;
               const SizedBox(
                 height: 7,
               ),
-/*    T_T(
-heading: 'Father Name/Husband Name',
-hint_text: 'Enter your Father Name/Husband Name',
-SecondWidget: false,
-controller: fatherNameController,
-maxlength: 30,
-maxlines: 1,
-isCnic: false,
-needFormatter: false,
-keyboard_type: TextInputType.name,
-),
-const SizedBox(
-height: 7,
-), */
+              T_T(
+                heading: 'Father Name/Husband Name',
+                hint_text: 'Enter your Father Name/Husband Name',
+                SecondWidget: false,
+                controller: fatherNameController,
+                maxlength: 30,
+                maxlines: 1,
+                isCnic: false,
+                needFormatter: false,
+                keyboard_type: TextInputType.name,
+              ),
+              const SizedBox(
+                height: 7,
+              ),
               T_T(
                 heading: 'CNIC',
                 hint_text: '41306-xxxxxxx-x',
@@ -378,7 +383,6 @@ height: 7,
                 onChanged: (String? newValue) {
                   setState(() {
                     selectedDistrict = newValue!;
-// Update talukas based on the selected district
                     fetchTaluka("$selectedDistrict") ?? [];
                   });
                 },
@@ -486,6 +490,44 @@ height: 7,
                             : Colors.grey), // Border color when not focused
                   ),
                   hintText: "0312-11xxxxx",
+                ),
+              ),
+              const SizedBox(
+                height: 7,
+              ),
+              T_T(
+                heading: 'Complaint Type',
+                hint_text: hintTaluka,
+                SecondWidget: true,
+                controller: nameController,
+                maxlength: 0,
+                maxlines: 1,
+                isCnic: false,
+                needFormatter: false,
+              ),
+              DropdownButtonFormField<String>(
+                hint: Text(hintcomplaint),
+                value: selectedcomplaintype,
+                onChanged: (value) {
+                  setState(() {
+                    selectedcomplaintype = value!;
+                  });
+                },
+                items: complaintype.map((complaintype) {
+                  return DropdownMenuItem<String>(
+                    value: complaintype,
+                    child: Text(complaintype),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.blue), // Border color when focused
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Colors.grey), // Border color when not focused
+                  ),
                 ),
               ),
               const SizedBox(
