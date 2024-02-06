@@ -21,11 +21,13 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
     try {
       final Map<String, dynamic> requestBody = {
         "name": name,
+        "fathername": fathername,
         "cnic": cnic,
         "district": selectedDistrict,
         "taluka": _selectedTaluka,
         "contact": cellnumber,
-        "nature_of_complaint": complaint,
+        "nature_of_complaint": selectedcomplaintype,
+        "other_descrpition": complaint,
       };
 
       final response = await http.post(
@@ -55,10 +57,24 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
   List<String> Taluka = [];
   String hintTaluka = "Select Taluka";
   String hintdistricts = "Select Districts";
-  String hintcomplaint = "Select Complain";
+  String hintcomplaint = "Select Nature";
   String? _selectedTaluka;
   String? selectedcomplaintype;
-  List<String> complaintype = ["a", "b", "c"];
+  List<String> complaintype = [
+    "De-Credit",
+    "Eligible",
+    "Ineligible",
+    "Underage Case",
+    "Error 938",
+    "Error 920",
+    "Error 933 - District Not Match",
+    "Error 368 - CNIC cannot be verified",
+    "Death Case",
+    "Finger Print Issue",
+    "Expired CNIC",
+    "Wrong CNIC",
+    "Total"
+  ];
 
   Future opendialogbox() => showDialog(
         context: context,
@@ -281,9 +297,22 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 height: 13,
               ),
               const Text(
-                "Online Complain Forum",
+                "Sindh Water & Agriculture Transformation Project",
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 24,
+                  fontSize: 24,
+                  height: 1.2,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              const Text(
+                "Online Complaint Form",
+                style: TextStyle(
+                    fontSize: 18,
                     color: Colors.black,
                     fontWeight: FontWeight.w500),
               ),
@@ -291,7 +320,7 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 height: 18,
               ),
               T_T(
-                heading: 'Name',
+                heading: 'Name of Complainant',
                 hint_text: 'Enter your name',
                 SecondWidget: false,
                 controller: nameController,
@@ -305,7 +334,7 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 height: 7,
               ),
               T_T(
-                heading: 'Father Name/Husband Name',
+                heading: 'Father/Husband of Complainant',
                 hint_text: 'Enter your Father Name/Husband Name',
                 SecondWidget: false,
                 controller: fatherNameController,
@@ -319,7 +348,7 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 height: 7,
               ),
               T_T(
-                heading: 'CNIC',
+                heading: 'CNIC No',
                 hint_text: '41306-xxxxxxx-x',
                 SecondWidget: true,
                 controller: cnicController,
@@ -405,7 +434,7 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 ),
               ),
               const SizedBox(
-                height: 7,
+                height: 10,
               ),
               T_T(
                 heading: 'Taluka',
@@ -444,7 +473,7 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 },
               ),
               const SizedBox(
-                height: 7,
+                height: 10,
               ),
               T_T(
                 heading: 'Contact No',
@@ -496,7 +525,7 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 height: 7,
               ),
               T_T(
-                heading: 'Complaint Type',
+                heading: 'Nature of Complaint',
                 hint_text: hintTaluka,
                 SecondWidget: true,
                 controller: nameController,
@@ -531,11 +560,11 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 ),
               ),
               const SizedBox(
-                height: 7,
+                height: 10,
               ),
               T_T(
-                heading: 'Nature of Complaint',
-                hint_text: 'Enter your Complain',
+                heading: 'Other Description',
+                hint_text: 'Enter Descrption',
                 SecondWidget: false,
                 controller: complaintController,
                 maxlength: 500,
