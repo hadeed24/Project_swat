@@ -545,7 +545,8 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 items: complaintype.map((complaintype) {
                   return DropdownMenuItem<String>(
                     value: complaintype,
-                    child: Text(complaintype,style: const TextStyle(fontWeight: FontWeight.w400)),
+                    child: Text(complaintype,
+                        style: const TextStyle(fontWeight: FontWeight.w400)),
                   );
                 }).toList(),
                 decoration: const InputDecoration(
