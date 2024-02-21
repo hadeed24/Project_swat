@@ -297,11 +297,11 @@ class _OnlineComplainForumState extends State<OnlineComplainForum> {
                 height: 13,
               ),
               const Text(
-                "Sindh Water & Agriculture Transformation Project",
+                "Sindh Water & Agriculture\nTransformation Project",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 24,
-                  height: 1.2,
+                  fontSize: 22,
+                  height: 1.1,
                   color: Colors.black,
                   fontWeight: FontWeight.w500,
                 ),
